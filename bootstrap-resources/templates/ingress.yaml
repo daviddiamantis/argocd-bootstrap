@@ -2,32 +2,6 @@
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: ingress-grafana
-  namespace: observability
-  annotations:
-    kubernetes.io/ingress.class: "azure/application-gateway"
-    cert-manager.io/cluster-issuer: "letsencrypt-prod"
-    acme.cert-manager.io/http01-edit-in-place: "true"
-spec:
-  tls:
-  - hosts:
-    - grafana.{{ .Values.domain }}
-    secretName: nginx-grafana-tls
-  rules:
-  - host: grafana.{{ .Values.domain }}
-    http:
-      paths:
-      - path: /
-        pathType: Prefix
-        backend:
-          service:
-            name: observability-grafana
-            port:
-                number: 80
----
-apiVersion: networking.k8s.io/v1
-kind: Ingress
-metadata:
   name: ingress-argocd
   namespace: argocd
   annotations:

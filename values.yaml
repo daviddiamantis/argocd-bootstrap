@@ -6,11 +6,6 @@ storage:
   local:
     enable: true
 # Application specific
-observability:
-  storageClass: "local-path"
-  pdkey:
-  storageSize: 10Gi
-  retention: 5d
 trivy:
   enable: false
 logging:
