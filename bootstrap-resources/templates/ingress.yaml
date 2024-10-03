@@ -1,4 +1,7 @@
-{{- if .Values.domain }}
+{{- $configMap := lookup "v1" "ConfigMap" "argocd" "ingress-config" -}}
+{{- $domain := (index $configMap.data "domain") -}}
+
+{{- if $domain }}
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
@@ -12,10 +15,10 @@ metadata:
 spec:
   tls:
   - hosts:
-    - argocd.{{ .Values.domain }}
+    - argocd.{{ $domain }}
     secretName: argocd-tls
   rules:
-  - host: argocd.{{ .Values.domain }}
+  - host: argocd.{{ $domain }}
     http:
       paths:
       - path: /
@@ -24,6 +27,5 @@ spec:
           service:
             name: argocd-server
             port:
-              number:
-                80
+              number: 80
 {{- end }}
